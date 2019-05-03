@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'screens/home.dart';
+import 'screens/news_list.dart';
 
 class App extends StatelessWidget {
   @override
@@ -8,7 +8,8 @@ class App extends StatelessWidget {
       title: 'News',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      )
+      ),
+      home: NewsList(),
     );
   }
 }
