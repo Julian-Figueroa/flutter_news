@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
-// import 'dart:async';
 import '../models/item_module.dart';
 import 'repository.dart';
 
@@ -30,6 +29,7 @@ class NewsDbProvider implements Source, Cache {
             type TEXT,
             by TEXT,
             time INTEGER,
+            text TEXT,
             parent INTEGER,
             kids BLOB,
             dead INTEGER,
@@ -37,7 +37,7 @@ class NewsDbProvider implements Source, Cache {
             url TEXT,
             title TEXT,
             descendants INTEGER 
-          );
+          )
           """);
       },
     );
@@ -59,7 +59,11 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<int> addItem(ItemModel item) {
-    return db.insert("Items", item.toMap());
+    return db.insert(
+      "Items",
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 }
 

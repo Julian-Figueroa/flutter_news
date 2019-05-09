@@ -21,8 +21,6 @@ class NewsList extends StatelessWidget {
     return StreamBuilder(
       stream: bloc.topIds,
       builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
-        print(snapshot.connectionState);
-
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
@@ -32,6 +30,8 @@ class NewsList extends StatelessWidget {
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (BuildContext context, int index) {
+            bloc.fetchItem(snapshot.data[index]);
+
             return NewsListTile(
               itemId: snapshot.data[index],
             );
