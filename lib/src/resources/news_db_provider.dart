@@ -18,7 +18,7 @@ class NewsDbProvider implements Source, Cache {
 
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, "items.db");
+    final path = join(documentsDirectory.path, "items2.db");
     db = await openDatabase(
       path,
       version: 1,
@@ -36,7 +36,8 @@ class NewsDbProvider implements Source, Cache {
             deleted INTEGER,
             url TEXT,
             title TEXT,
-            descendants INTEGER 
+            descendants INTEGER,
+            score INTEGER
           )
           """);
       },
@@ -64,6 +65,10 @@ class NewsDbProvider implements Source, Cache {
       item.toMap(),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
+  }
+
+  Future<int> clear() {
+    return db.delete("Items");
   }
 }
 
